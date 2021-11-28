@@ -3,6 +3,7 @@ import ContentCards from "../components/ContentCards/ContentCards";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { server } from "../config";
+import { dbConnect } from "../utils/dbConnect";
 
 function Home({ eventCategoryData }) {
   const [selectedEvent, setSelectedEvent] = useState(0);
@@ -49,18 +50,36 @@ function Home({ eventCategoryData }) {
 export default Home;
 
 export async function getStaticProps(context) {
-  const res = await fetch(`${server}/api/event_categories`);
-  const data = await res.json();
+  // const res = await fetch(`${server}/api/event_categories`);
+  // const data = await res.json();
 
-  if (!data) {
+  // if (!data) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
+
+  // return {
+  //   props: {
+  //     eventCategoryData: data.message,
+  //   }, // will be passed to the page component as props
+  // };
+  try {
+    // connect to the database
+    let { db } = await dbConnect();
+    // fetch the posts
+    let event_categories = await db
+      .collection("event_categories")
+      .find({})
+      .toArray();
+
     return {
-      notFound: true,
+      props: {
+        eventCategoryData: JSON.parse(JSON.stringify(event_categories)),
+      },
     };
+  } catch (error) {
+    // return the error
+    throw new Error(error);
   }
-
-  return {
-    props: {
-      eventCategoryData: data.message,
-    }, // will be passed to the page component as props
-  };
 }

@@ -8,6 +8,8 @@ import About from "../../components/SingleEvent/About";
 import Recent from "../../components/SingleEvent/Recent";
 import Community from "../../components/SingleEvent/Community";
 import Outcome from "../../components/SingleEvent/Outcome";
+import { dbConnect } from "../../utils/dbConnect";
+const ObjectId = require("mongodb").ObjectId;
 
 const recentData = [
   {
@@ -223,42 +225,103 @@ function SingleEvent({ data }) {
 }
 
 export const getStaticProps = async (context) => {
-  const res = await fetch(
-    `${server}/api/event_categories/${context.params.event_category_id}/${context.params.event_id}`
-  );
+  // const res = await fetch(
+  //   `${server}/api/event_categories/${context.params.event_category_id}/${context.params.event_id}`
+  // );
 
-  const data = await res.json();
+  // const data = await res.json();
 
-  return {
-    props: {
-      data: data.message[0].events,
-    },
-    revalidate: 1, //Incremental Site Generation after every 1sec
-  };
+  // return {
+  //   props: {
+  //     data: data.message[0].events,
+  //   },
+  //   revalidate: 1, //Incremental Site Generation after every 1sec
+  // };
+  try {
+    let { db } = await dbConnect();
+    // fetch the posts
+    let event = await db
+      .collection("event_categories")
+      .aggregate([
+        {
+          $match: {
+            _id: ObjectId(context.params.event_category_id),
+          },
+        },
+        { $unwind: "$events" },
+        {
+          $match: {
+            "events.id": context.params.event_id,
+          },
+        },
+      ])
+      .toArray();
+
+    return {
+      props: {
+        data: JSON.parse(JSON.stringify(event[0].events)),
+      },
+      revalidate: 1,
+    };
+  } catch (error) {
+    // return the error
+    throw new Error(error);
+  }
 };
 
 export const getStaticPaths = async () => {
-  const CategRes = await fetch(`${server}/api/event_categories`);
+  // const CategRes = await fetch(`${server}/api/event_categories`);
 
-  const data = await CategRes.json();
+  // const data = await CategRes.json();
 
-  const paths = [];
+  // const paths = [];
 
-  for (var i = 0; i < data.message.length; i++) {
-    for (var j = 0; j < data.message[i].events.length; j++) {
-      paths.push({
-        params: {
-          event_category_id: data.message[i]._id.toString(),
-          event_id: data.message[i].events[j].id.toString(),
-        },
-      });
+  // for (var i = 0; i < data.message.length; i++) {
+  //   for (var j = 0; j < data.message[i].events.length; j++) {
+  //     paths.push({
+  //       params: {
+  //         event_category_id: data.message[i]._id.toString(),
+  //         event_id: data.message[i].events[j].id.toString(),
+  //       },
+  //     });
+  //   }
+  // }
+
+  // return {
+  //   paths,
+  //   fallback: false,
+  // };
+
+  try {
+    // connect to the database
+    let { db } = await dbConnect();
+    // fetch the posts
+    let event_categories = await db
+      .collection("event_categories")
+      .find({})
+      .toArray();
+
+    const data = JSON.parse(JSON.stringify(event_categories));
+    const paths = [];
+
+    for (var i = 0; i < data.length; i++) {
+      for (var j = 0; j < data[i].events.length; j++) {
+        paths.push({
+          params: {
+            event_category_id: data[i]._id.toString(),
+            event_id: data[i].events[j].id.toString(),
+          },
+        });
+      }
     }
+    return {
+      paths,
+      fallback: false,
+    };
+  } catch (error) {
+    // return the error
+    throw new Error(error);
   }
-
-  return {
-    paths,
-    fallback: false,
-  };
 };
 
 export default SingleEvent;
