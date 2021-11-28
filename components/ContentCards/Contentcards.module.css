@@ -1,0 +1,12 @@
+.content_area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
+    grid-gap: 3rem;
+    margin: 4rem 0;
+}
+
+@media screen and (max-width:345px){
+    .content_area {
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    }
+}

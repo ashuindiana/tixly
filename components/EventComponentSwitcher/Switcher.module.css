@@ -1,0 +1,43 @@
+.switcherWrapper {
+  margin-top: 13rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.eventWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 3rem;
+}
+
+.event {
+  margin: 0 4rem;
+  font-size: 2rem;
+  color: #a6a6a6;
+  cursor: pointer;
+}
+
+.event_active {
+  color: #050505;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rem;
+}
+
+.header_item {
+  margin: 0 5rem;
+}
+
+.firstRow {
+  font-size: 3rem;
+  color: #3e33cd;
+}
+
+.secondRow {
+  font-size: 1.8rem;
+  color: #646464;
+}

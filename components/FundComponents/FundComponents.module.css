@@ -1,0 +1,78 @@
+.card {
+  background-color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: min-content;
+  margin: 3rem 0;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 2rem;
+}
+
+.card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.card_title {
+  flex: 0.7;
+}
+
+.card_input {
+  height: 4.5rem;
+}
+.card_input > input {
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-size: 20px;
+  outline: none;
+  height: 100%;
+  padding: 0 10px;
+  background-color: #eaeaea;
+  width: 100%;
+}
+
+.recharge_amt_wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 4.5rem;
+}
+
+.recharge_amt_wrapper > * + * {
+  margin-left: 1rem;
+}
+
+.rchg_amt {
+  background: #eaeaea;
+  border-radius: 10px;
+  font-size: 2rem;
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.button {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+}
+
+.button > button {
+  width: 100%;
+  color: #ffffff;
+  background-color: #3f32ce;
+  height: 100%;
+  border-radius: 10px;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
