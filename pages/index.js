@@ -77,6 +77,7 @@ export async function getStaticProps(context) {
       props: {
         eventCategoryData: JSON.parse(JSON.stringify(event_categories)),
       },
+      revalidate: 1,
     };
   } catch (error) {
     // return the error

@@ -51,6 +51,7 @@ export async function getStaticProps(context) {
         live_data: JSON.parse(JSON.stringify(liveEvent_data)),
         past_data: JSON.parse(JSON.stringify(pastEvent_data)),
       },
+      revalidate: 1,
     };
   } catch (error) {
     // return the error
