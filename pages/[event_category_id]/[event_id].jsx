@@ -1,4 +1,4 @@
-import { server } from "../../config";
+// import { server } from "../../config";
 import { useState } from "react";
 import Image from "next/image";
 import styles from "../../styles/event.module.css";
