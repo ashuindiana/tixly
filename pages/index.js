@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { server } from "../config";
 
-export default function Home({ eventCategoryData }) {
+function Home({ eventCategoryData }) {
   const [selectedEvent, setSelectedEvent] = useState(0);
 
   const handleSelectedEvent = (_id) => (e) => {
@@ -45,6 +45,8 @@ export default function Home({ eventCategoryData }) {
     </motion.div>
   );
 }
+
+export default Home;
 
 export async function getStaticProps(context) {
   const res = await fetch(`${server}/api/event_categories`);

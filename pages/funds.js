@@ -4,7 +4,7 @@ import styles from "../styles/funds.module.css";
 import Recharge from "../components/FundComponents/Recharge";
 import Withdraw from "../components/FundComponents/Withdraw";
 
-function positions() {
+function Funds() {
   const [rchgAmt, setRchgAmt] = useState(0);
   const [withdrawAmt, setWithdrawAmt] = useState(0);
   const [rchgIsOpen, setRchgIsOpen] = useState(false);
@@ -141,4 +141,4 @@ function positions() {
   );
 }
 
-export default positions;
+export default Funds;

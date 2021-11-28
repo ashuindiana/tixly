@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../styles/referrals.module.css";
 
-function positions() {
+function Referrals() {
   const [isCopied, setIsCopied] = useState(false);
   const inviteCode = "i09824rah";
 
@@ -108,4 +108,4 @@ function positions() {
   );
 }
 
-export default positions;
+export default Referrals;
