@@ -2,8 +2,8 @@ import Carousel from "../components/Carousel/Carousel";
 import ContentCards from "../components/ContentCards/ContentCards";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { server } from "../config";
 import { dbConnect } from "../utils/dbConnect";
+import Header from "../components/Header/Header";
 
 function Home({ eventCategoryData }) {
   const [selectedEvent, setSelectedEvent] = useState(0);
@@ -31,18 +31,28 @@ function Home({ eventCategoryData }) {
         x: -50,
         transitionDelay: 0.3,
       }}
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
-      <Carousel
-        eventCategoryData={eventCategoryData}
-        selectedEvent={selectedEvent}
-        handleSelectedEvent={handleSelectedEvent}
-      />
-      <ContentCards
-        event_category_id={eventCategoryData[selectedEvent]._id}
-        events={eventCategoryData[selectedEvent].events}
-        card_details={["volume", "yes", "no"]}
-      />
+      <Header eventCategoryData={eventCategoryData} />
+      <div
+        style={{ padding: "0 5%", display: "flex", flexDirection: "column" }}
+      >
+        <Carousel
+          eventCategoryData={eventCategoryData}
+          selectedEvent={selectedEvent}
+          handleSelectedEvent={handleSelectedEvent}
+        />
+        <ContentCards
+          event_category_id={eventCategoryData[selectedEvent]._id}
+          events={eventCategoryData[selectedEvent].events}
+          card_details={["Volume", "Yes", "No"]}
+          event_categ_title={eventCategoryData[selectedEvent].title}
+        />
+      </div>
     </motion.div>
   );
 }
@@ -50,20 +60,6 @@ function Home({ eventCategoryData }) {
 export default Home;
 
 export async function getStaticProps(context) {
-  // const res = await fetch(`${server}/api/event_categories`);
-  // const data = await res.json();
-
-  // if (!data) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-
-  // return {
-  //   props: {
-  //     eventCategoryData: data.message,
-  //   }, // will be passed to the page component as props
-  // };
   try {
     // connect to the database
     let { db } = await dbConnect();

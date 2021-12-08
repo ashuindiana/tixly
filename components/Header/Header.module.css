@@ -1,11 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
-
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f7f7f7;
+  border-bottom: 1px solid #e7e4e4;
+}
 
 .main_nav {
   display: flex;
   align-items: center;
   height: 8rem;
   width: 100%;
+  padding: 0 5%;
 }
 
 .logo {
@@ -13,50 +19,20 @@
 }
 
 .logo h2 {
-  font-size: 4.0rem;
-  font-weight: 500;
+  font-size: 4rem;
+  font-weight: 400;
   background: -webkit-linear-gradient(#eee, rgb(69, 57, 248));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.search_icon {
+.search_wrapper {
   flex: 0.6;
-}
-
-.search_icon {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   height: 88%;
-}
-
-.search_icon input{
-  flex: 1.0;
-  border: none;
-  border-radius: 10px 0 0 10px;
-  height: 73%;
-  color: #000;
-  font-size: 16px;
-  outline: none;
-  padding: 0 10px;
-  background-color: #EAEAEA;
-}
-
-.search_icon .icon {
-  display: flex;
-  align-items: center;
-  height: 73%;
-  width: 40px;
-  border-radius: 0 10px 10px 0;
-  cursor: pointer;
-  background-color: #EAEAEA;
-}
-
-#search_icon_avatar {
-  font-size: 3rem;
-  color: #afabab;
 }
 
 .menu_link {
@@ -85,12 +61,15 @@
   height: 88%;
 }
 
- .mobile_menu_link {
-   display: none;
- }
+.mobile_menu_link {
+  display: none;
+}
 
- @media screen and (max-width:950px) {
+.profile_wrapper {
+  display: none;
+}
 
+@media screen and (max-width: 950px) {
   .menu_link {
     display: none;
   }
@@ -101,17 +80,27 @@
   }
 
   .logo {
-    order: 2;
+    /* order: 2;
     flex: 0.4;
-    z-index: 1;
+    z-index: 1; */
+    display: none;
   }
 
-  .search_icon {
-    order: 3;
+  .search_wrapper {
+    order: 2;
   }
 
   .mobile_menu_link {
     display: inline;
+  }
+
+  .profile_wrapper {
+    order: 3;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex: 0.2;
   }
 
   /* Hamburger Menu Animation with Css */
@@ -177,25 +166,23 @@
     visibility: visible;
     opacity: 1;
   } */
+}
 
+@media screen and (max-width: 650px) {
+  .logo h2 {
+    font-size: 3rem;
+    text-align: center;
+  }
 
+  .hamburger_toggle_icon {
+    font-size: 4rem !important;
+  }
 
- }
+  .toggle_link {
+    height: 75%;
+  }
 
- @media screen and (max-width:650px) {
-   .logo h2{
-    font-size: 3.0rem;
-   }
-
-   .hamburger_toggle_icon {
-     font-size: 4rem !important;
-   }
-
-   .toggle_link {
-     height: 75%;
-   }
-
-   .search_icon {
-     height: 75%;
-   }
- }
+  .search_wrapper {
+    height: 75%;
+  }
+}

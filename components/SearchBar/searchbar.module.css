@@ -1,0 +1,52 @@
+.SearchBarContainer {
+  height: 73%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eaeaea;
+  border-radius: 10px;
+}
+
+.SearchInputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 2px 15px;
+  height: 100%;
+}
+
+.SearchInput {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  border-radius: 6px;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.SearchInput:focus {
+  outline: none;
+}
+.SearchInput:focus::placeholder {
+  opacity: 0;
+}
+.SearchInput::placeholder {
+  color: #bababa;
+  transition: all 250ms ease-in-out;
+}
+
+.SearchIcon {
+  width: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #afabab;
+}
+
+.noOptions {
+  height: 3rem;
+}

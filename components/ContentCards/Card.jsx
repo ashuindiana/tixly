@@ -3,12 +3,21 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-function Card({ card_details, data, event_category_id }) {
-  var { asPath } = useRouter();
+function Card({ card_details, data, noLink, dataType }) {
+  // console.log(event_category_id);
+  let { asPath } = useRouter();
   asPath = asPath.slice(1);
+  let path =
+    asPath.indexOf("positions") !== -1
+      ? `${asPath}/${dataType}/${data._id}`
+      : `${asPath}/singleEvent/${data.id}`;
+
+  if (noLink) {
+    path = `${asPath}`;
+  }
 
   return (
-    <Link href={`${asPath}/${event_category_id}/${data.id}`}>
+    <Link href={path}>
       <div className={styles.card}>
         <div className={styles.header}>
           <div className={styles.image}>
@@ -22,7 +31,7 @@ function Card({ card_details, data, event_category_id }) {
             <div className={styles.detail_item} key={`${data.id}_${id}`}>
               <div className={styles.upper_row}>{item}</div>
               <div className={styles.lower_row}>
-                {id != 0 && "₹ "} {data[item]}
+                {id != 0 && "₹ "} {data[item.toLowerCase()]}
               </div>
             </div>
           ))}

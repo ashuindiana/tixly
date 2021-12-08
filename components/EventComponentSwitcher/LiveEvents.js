@@ -15,7 +15,11 @@ function LiveEvents({ trades, investment, card_details, live_data }) {
           <div className={styles.secondRow}>Investment</div>
         </div>
       </div>
-      <ContentCards events={live_data} card_details={card_details} />
+      <ContentCards
+        events={live_data}
+        card_details={card_details}
+        dataType="live"
+      />
     </div>
   );
 }

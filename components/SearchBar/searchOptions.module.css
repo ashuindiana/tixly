@@ -1,0 +1,44 @@
+/* .CategContainer {
+  width: 100%;
+  min-height: 20rem;
+  display: flex;
+  border-bottom: 2px solid #d8d8d852;
+  padding: 0 8px;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 1.4rem;
+} */
+
+.eventContainer:hover {
+  background-color: #f7f7f7;
+}
+
+.eventContainer {
+  height: 8rem;
+  width: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 1px solid #d8d8d852;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.image {
+  border-radius: 50%;
+  width: 3.2rem;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  position: relative;
+}
+
+.image > span {
+  height: 100% !important;
+}
+
+.image > img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}

@@ -12,7 +12,7 @@ const PreviousBtn = (props) => {
   return (
     <div className={className} onClick={onClick}>
       <ArrowBackIosNewOutlinedIcon
-        style={{ color: "black", fontSize: "30px" }}
+        style={{ color: "black", fontSize: "20px" }}
       />
     </div>
   );
@@ -22,27 +22,30 @@ const NextBtn = (props) => {
   return (
     <div className={className} onClick={onClick}>
       <ArrowForwardIosOutlinedIcon
-        style={{ color: "black", fontSize: "30px" }}
+        style={{ color: "black", fontSize: "20px" }}
       />
     </div>
   );
 };
 
 const carouselProperties = {
+  dots: true,
+  variableWidth: true,
   prevArrow: <PreviousBtn />,
   nextArrow: <NextBtn />,
   slidesToShow: 5,
-  // infinite={false}
+  infinite: true,
   slidesToScroll: 5,
   centerMode: false,
   centerPadding: "170px",
+  mobileFirst: true,
   responsive: [
     {
-      breakpoint: 426,
+      breakpoint: 1025,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 4,
         centerMode: false,
-        slidesToScroll: 1,
+        slidesToScroll: 4,
       },
     },
     {
@@ -54,11 +57,11 @@ const carouselProperties = {
       },
     },
     {
-      breakpoint: 1025,
+      breakpoint: 426,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 1,
         centerMode: false,
-        slidesToScroll: 4,
+        slidesToScroll: 1,
       },
     },
   ],

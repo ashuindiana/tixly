@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../styles/referrals.module.css";
+import Header from "../components/Header/Header";
 
 function Referrals() {
   const [isCopied, setIsCopied] = useState(false);
@@ -48,57 +49,67 @@ function Referrals() {
         x: -50,
         transitionDelay: 0.3,
       }}
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        // padding: "0 5%",
+      }}
     >
-      <div className={styles.container}>
-        <div className={styles.top}>
-          <div className={styles.left}>
-            <div className={styles.info}>
-              <div className={styles.firstRow}>2</div>
-              <div className={styles.secondRow}>People Invited</div>
+      <Header noSearch />
+      <div
+        style={{ padding: "0 5%", display: "flex", flexDirection: "column" }}
+      >
+        <div className={styles.container}>
+          <div className={styles.top}>
+            <div className={styles.left}>
+              <div className={styles.info}>
+                <div className={styles.firstRow}>2</div>
+                <div className={styles.secondRow}>People Invited</div>
+              </div>
+              <div className={styles.info}>
+                <div className={styles.firstRow}>₹ 250</div>
+                <div className={styles.secondRow}>Earnings</div>
+              </div>
             </div>
-            <div className={styles.info}>
-              <div className={styles.firstRow}>₹ 250</div>
-              <div className={styles.secondRow}>Earnings</div>
+            <div className={styles.right}>
+              Get ₹ 10 for every user you invite on Tixly. Users who join using
+              your code will get an additional balance of ₹ 10
             </div>
           </div>
-          <div className={styles.right}>
-            Get ₹ 10 for every user you invite on Tixly. Users who join using
-            your code will get an additional balance of ₹ 10
-          </div>
-        </div>
-        <div className={styles.below}>
-          <div className={styles.left_below}>
-            <div style={{ color: "#9B9B9B", fontSize: "3rem" }}>History</div>
-            <div className={styles.card}>
-              <div className={styles.card_header}>
-                <div className={styles.card_title}>@tauronihal joined</div>
+          <div className={styles.below}>
+            <div className={styles.left_below}>
+              <div style={{ color: "#9B9B9B", fontSize: "3rem" }}>History</div>
+              <div className={styles.card}>
+                <div className={styles.card_header}>
+                  <div className={styles.card_title}>@tauronihal joined</div>
 
-                <div className={styles.card_change_pos}>+ ₹20</div>
+                  <div className={styles.card_change_pos}>+ ₹20</div>
+                </div>
+              </div>
+              <div className={styles.card}>
+                <div className={styles.card_header}>
+                  <div className={styles.card_title}>Withdrawal</div>
+                  <div className={styles.card_change_neg}>- ₹ 20</div>
+                </div>
+                <div className={styles.card_details}>
+                  <div>Captured at: Aug, 10, 2021 2:10PM</div>
+                  <div>Closing balance: ₹ 10</div>
+                  <div>Deducted for withdrawing</div>
+                </div>
               </div>
             </div>
-            <div className={styles.card}>
-              <div className={styles.card_header}>
-                <div className={styles.card_title}>Withdrawal</div>
-                <div className={styles.card_change_neg}>- ₹ 20</div>
-              </div>
-              <div className={styles.card_details}>
-                <div>Captured at: Aug, 10, 2021 2:10PM</div>
-                <div>Closing balance: ₹ 10</div>
-                <div>Deducted for withdrawing</div>
-              </div>
-            </div>
-          </div>
-          <div className={styles.right_below}>
-            <div className={styles.card}>
-              <div style={{ fontSize: "3rem" }}>Invite</div>
-              <div className={styles.card_input}>
-                <input type="text" placeholder={inviteCode} readOnly />
-              </div>
-              <div className={styles.button}>
-                <button onClick={handleCopyClick}>
-                  {isCopied ? "Copied!" : "Copy Code"}
-                </button>
+            <div className={styles.right_below}>
+              <div className={styles.card}>
+                <div style={{ fontSize: "3rem" }}>Invite</div>
+                <div className={styles.card_input}>
+                  <input type="text" placeholder={inviteCode} readOnly />
+                </div>
+                <div className={styles.button}>
+                  <button onClick={handleCopyClick}>
+                    {isCopied ? "Copied!" : "Copy Code"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

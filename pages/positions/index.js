@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import Switcher from "../components/EventComponentSwitcher/Switcher";
-import { server } from "../config";
-import { dbConnect } from "../utils/dbConnect";
+import Switcher from "../../components/EventComponentSwitcher/Switcher";
+import Header from "../../components/Header/Header";
+import { dbConnect } from "../../utils/dbConnect";
 
 function positions({ live_data, past_data }) {
   return (
@@ -22,9 +22,19 @@ function positions({ live_data, past_data }) {
         x: -50,
         transitionDelay: 0.3,
       }}
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        // padding: "0 5%",
+      }}
     >
-      <Switcher live_data={live_data} past_data={past_data} />
+      <Header noSearch />
+      <div
+        style={{ padding: "0 5%", display: "flex", flexDirection: "column" }}
+      >
+        <Switcher live_data={live_data} past_data={past_data} />
+      </div>
     </motion.div>
   );
 }

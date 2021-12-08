@@ -38,7 +38,7 @@ function Switcher({ live_data, past_data }) {
             <LiveEvents
               trades={2}
               investment={500}
-              card_details={["trades", "investment"]}
+              card_details={["Trades", "Investment"]}
               live_data={live_data}
             />
           </motion.div>
@@ -54,7 +54,7 @@ function Switcher({ live_data, past_data }) {
               trades={2}
               investment={500}
               returns={90}
-              card_details={["trades", "investment", "returns"]}
+              card_details={["Trades", "Investment", "Returns"]}
               past_data={past_data}
             />
           </motion.div>

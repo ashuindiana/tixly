@@ -11,11 +11,11 @@ export default async function handler(
     let event = await db
       .collection("event_categories")
       .aggregate([
-        {
-          $match: {
-            _id: ObjectId(event_category_id),
-          },
-        },
+        // {
+        //   $match: {
+        //     _id: ObjectId(event_category_id),
+        //   },
+        // },
         { $unwind: "$events" },
         {
           $match: {

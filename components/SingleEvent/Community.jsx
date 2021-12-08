@@ -13,15 +13,17 @@ function Community({ communityData }) {
           <button type="submit">Post</button>
         </div>
       </div>
-      {communityData.map((item) => (
-        <div className={styles.communityEvent} key={item.id}>
-          <div className={styles.upper}>
-            <div className={styles.name}>{item.name}</div>
-            <div className={styles.time}>{item.timeElapsed} minutes ago</div>
+      <div className={styles.eventsWrapper}>
+        {communityData.map((item) => (
+          <div className={styles.communityEvent} key={item.id}>
+            <div className={styles.upper}>
+              <div className={styles.name}>{item.name}</div>
+              <div className={styles.time}>{item.timeElapsed} minutes ago</div>
+            </div>
+            <div className={styles.lower}>{item.comment}</div>
           </div>
-          <div className={styles.lower}>{item.comment}</div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

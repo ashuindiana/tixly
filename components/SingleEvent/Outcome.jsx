@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./outcome.module.css";
+import Slider from "@mui/material/Slider";
 
 function Outcome({ type }) {
   const [qty, setQty] = useState(1);
@@ -19,16 +20,29 @@ function Outcome({ type }) {
           </div>
         </div>
         <div className={styles.lowerRow}>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            step="1"
+          <Slider
+            step={1}
+            min={1}
+            max={100}
             value={qty}
             onChange={(e) => setQty(e.target.value)}
-            className={`${styles.slider} ${
-              type === "yes" ? styles.yesSlider : styles.noSlider
-            }`}
+            sx={{
+              color: `${type === "yes" ? "#81d373" : "#f65179"}`,
+              width: "50%",
+              borderRadius: "25px",
+              height: "12px",
+              "& .MuiSlider-rail": {
+                color: "#fff",
+                border: "1px solid #D8D8D8",
+              },
+              "& .MuiSlider-thumb": {
+                height: 25,
+                width: 25,
+                "&:hover, &.Mui-focusVisible": {
+                  boxShadow: "none",
+                },
+              },
+            }}
           />
         </div>
       </div>
@@ -45,16 +59,29 @@ function Outcome({ type }) {
           </div>
         </div>
         <div className={styles.lowerRow}>
-          <input
-            type="range"
-            step="1"
-            min="1"
-            max="100"
+          <Slider
+            step={1}
+            min={1}
+            max={100}
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            className={`${styles.slider} ${
-              type === "yes" ? styles.yesSlider : styles.noSlider
-            }`}
+            sx={{
+              color: `${type === "yes" ? "#81d373" : "#f65179"}`,
+              width: "50%",
+              borderRadius: "25px",
+              height: "12px",
+              "& .MuiSlider-rail": {
+                color: "#fff",
+                border: "1px solid #D8D8D8",
+              },
+              "& .MuiSlider-thumb": {
+                height: 25,
+                width: 25,
+                "&:hover, &.Mui-focusVisible": {
+                  boxShadow: "none",
+                },
+              },
+            }}
           />
         </div>
       </div>
@@ -74,10 +101,10 @@ function Outcome({ type }) {
       </div>
       <div className={styles.commissionInfo}>
         <div className={styles.commUpper}>
-          <div>Commmission</div>
-          <div>₹ 1</div>
+          <div style={{ fontSize: "1.7rem" }}>Commmission</div>
+          <div>*5% of potential win</div>
         </div>
-        <div className={styles.commLower}>*5% of potential win</div>
+        <div className={styles.commLower}>₹ 1</div>
       </div>
       <div style={{ width: "100%" }}>
         <button

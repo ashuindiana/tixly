@@ -19,7 +19,11 @@ function PastEvents({ trades, investment, returns, card_details, past_data }) {
           <div className={styles.secondRow}>Returns</div>
         </div>
       </div>
-      <ContentCards events={past_data} card_details={card_details} />
+      <ContentCards
+        events={past_data}
+        card_details={card_details}
+        dataType="past"
+      />
     </div>
   );
 }

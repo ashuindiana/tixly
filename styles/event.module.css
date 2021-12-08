@@ -3,6 +3,7 @@
   align-items: center;
   flex-direction: column;
   row-gap: 3rem;
+  padding-top: 20px;
 }
 
 .upper {
@@ -18,13 +19,13 @@
   justify-content: space-around;
   border-radius: 20px;
   background-color: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 18%);
 }
 
 .image {
   border-radius: 50%;
-  width: 7rem;
-  height: 6rem;
+  width: 6rem;
+  aspect-ratio: 1/1;
   overflow: hidden;
   position: relative;
 }
@@ -42,8 +43,20 @@
   width: 60%;
 }
 
+.titleAndHash {
+  display: flex;
+  flex-direction: column;
+  /* row-gap: 1rem; */
+  height: 100%;
+}
+
+.hashTag {
+  font-size: 1.4rem;
+  font-style: italic;
+}
+
 .header .title {
-  font-size: 2rem;
+  font-size: 1.7rem;
 }
 
 .details {
@@ -56,10 +69,12 @@
 }
 
 .detail_item {
-  background: #e3e1e1;
+  background: #f4f4f4;
   border-radius: 10px;
   height: 100%;
-  padding: 1rem;
+  padding: 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .upperRow {
@@ -87,7 +102,7 @@
 .chart {
   background-color: #ffffff;
   padding: 2rem;
-  box-shadow: 0px 4px 10px rgb(0 0 0 / 10%);
+  box-shadow: 0px 4px 10px rgb(0 0 0 / 18%);
   border-radius: 20px;
 }
 
@@ -125,11 +140,11 @@
   padding: 2rem 1rem;
   border-radius: 20px;
   background-color: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 18%);
 }
 
 .right > h2 {
-  font-size: 2rem;
+  font-size: 1.7rem;
   width: 100%;
   text-align: center;
 }
@@ -167,6 +182,12 @@
   color: #ffffff;
 }
 
+@media screen and (max-width: 1024px) {
+  .image {
+    width: 7rem;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .upper {
     width: 100%;
@@ -178,7 +199,8 @@
     width: 100%;
   }
   .details {
-    width: 100%;
+    width: 80%;
+    justify-content: flex-start;
   }
 
   .lower {
@@ -194,10 +216,19 @@
   .right {
     width: 80%;
   }
+  .image {
+    width: 6rem;
+  }
 }
 
 @media screen and (max-width: 375px) {
   .left {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .image {
+    width: 12rem;
   }
 }

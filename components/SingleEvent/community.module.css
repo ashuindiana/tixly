@@ -13,13 +13,20 @@
   height: min-content;
 }
 
-.communityEvent,
 .commentBox {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #f1efef;
   width: 90%;
   height: min-content;
+  row-gap: 1rem;
+}
+
+.communityEvent {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #f1efef;
+  width: 100%;
   row-gap: 1rem;
 }
 
@@ -66,4 +73,10 @@
   align-items: center;
   justify-content: flex-start;
   font-size: 1.5rem;
+}
+
+.eventsWrapper {
+  overflow-y: auto;
+  width: 90%;
+  height: 20rem;
 }
