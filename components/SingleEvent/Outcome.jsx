@@ -106,7 +106,7 @@ function Outcome({ type }) {
         </div>
         <div className={styles.commLower}>₹ 1</div>
       </div>
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "85%" }}>
         <button
           type="submit"
           className={`${type === "yes" ? styles.yesButton : styles.noButton} ${

@@ -46,7 +46,7 @@
 .titleAndHash {
   display: flex;
   flex-direction: column;
-  /* row-gap: 1rem; */
+  row-gap: 0.5rem;
   height: 100%;
 }
 
@@ -153,23 +153,42 @@
   width: 100%;
   display: flex;
   align-items: center;
+  column-gap: 32px;
   justify-content: space-around;
 }
 
 .rightEvent {
   width: 100%;
-  height: 4rem;
-  text-align: center;
+  height: 5rem;
+  /* text-align: center; */
 }
 
 .rightEvent > button {
   height: 100%;
-  width: 50%;
+  width: 60%;
   border-radius: 10px;
   border: none;
   background-color: #f4f4f4;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .rightEvent {
+    height: 5rem;
+  }
+  .rightEvent > button {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .rightEvent {
+    height: 4.4rem;
+  }
+  .rightEvent > button {
+    width: 65%;
+  }
 }
 
 .yesEvent_active {

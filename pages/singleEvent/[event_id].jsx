@@ -243,7 +243,10 @@ function Event({ data }) {
               <h2>Pick Outcome</h2>
               <div className={styles.switcherWrapper}>
                 <div className={styles.rightEventWrapper}>
-                  <div className={styles.rightEvent}>
+                  <div
+                    className={styles.rightEvent}
+                    style={{ textAlign: "end" }}
+                  >
                     <button
                       onClick={() => setOutcome("yes")}
                       className={`${
