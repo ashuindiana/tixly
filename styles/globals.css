@@ -105,4 +105,11 @@ li {
 .slick-list {
   height: 100%;
 }
+
+@media screen and (max-width: 768px) {
+  .slick-slide {
+    width: calc(12rem + 30px);
+    padding: 0 15px;
+  }
+}
 /* Carousel CSS Ends */
