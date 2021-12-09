@@ -143,8 +143,8 @@
   }
 
   .left {
-    justify-content: initial;
-    column-gap: 13rem;
+    justify-content: start;
+    column-gap: 40px;
   }
 
   .right_below {
