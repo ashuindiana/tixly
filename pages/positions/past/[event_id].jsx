@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../../styles/positionEvent.module.css";
+import styles from "../positionEvent.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { dbConnect } from "../../../utils/dbConnect";
 import Card from "../../../components/ContentCards/Card";

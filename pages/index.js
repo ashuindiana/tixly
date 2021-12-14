@@ -51,6 +51,7 @@ function Home({ eventCategoryData }) {
           events={eventCategoryData[selectedEvent].events}
           card_details={["Volume", "Yes", "No"]}
           event_categ_title={eventCategoryData[selectedEvent].title}
+          cardsToShowOnEachLoadMore={6}
         />
       </div>
     </motion.div>

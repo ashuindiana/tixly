@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import styles from "../../styles/event.module.css";
+import styles from "./event.module.css";
 import { Line } from "react-chartjs-2";
 import { AnimatePresence, motion } from "framer-motion";
 import About from "../../components/SingleEvent/About";
@@ -73,7 +73,6 @@ const communityData = [
 ];
 
 function Event({ data }) {
-  // return <h2>Hii</h2>;
   const [curEvent, setCurEvent] = useState("about");
   const [outcome, setOutcome] = useState("yes");
   return (

@@ -13,7 +13,7 @@ function Card({ card_details, data, noLink, dataType }) {
       : `${asPath}/singleEvent/${data.id}`;
 
   if (noLink) {
-    path = `${asPath}`;
+    path = "#";
   }
 
   return (
