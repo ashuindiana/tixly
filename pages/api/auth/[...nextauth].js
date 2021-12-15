@@ -8,6 +8,7 @@ const options = {
   session: {
     jwt: true,
   },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "credentials",

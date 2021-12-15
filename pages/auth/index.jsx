@@ -10,6 +10,12 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={16} ref={ref} variant="filled" {...props} />;
+});
 
 function Login() {
   const [mode, setMode] = useState("signin");
@@ -17,7 +23,28 @@ function Login() {
   const [password, setPassword] = useState("");
   const [cnfmPassword, setCnfmPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
+  const [msg, setMsg] = useState("");
+  const [severity, setSeverity] = useState("");
+
+  const [openNotif, setOpenNotif] = useState(false);
+
+  // const handleNotifOpen = () => {
+  //   setOpenNotif(true);
+  // };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenNotif(false);
+  };
+
+  const handleNotification = (message, type) => {
+    setMsg(message);
+    setSeverity(type);
+    setOpenNotif(true);
+  };
 
   // const { data: session } = useSession();
   const router = useRouter();
@@ -30,7 +57,10 @@ function Login() {
       !password ||
       password.trim().length < 7
     ) {
-      setError("Invalid Email Format or Password less than 7 characters");
+      handleNotification(
+        "Invalid Email Format or Password less than 7 characters",
+        "error"
+      );
       return;
     }
 
@@ -45,12 +75,12 @@ function Login() {
       console.log(result);
 
       if (!result.error) {
+        setStatesToDefault();
         router.replace("/");
       } else {
-        setError(result.error);
+        handleNotification(result.error, "error");
       }
     } catch (error) {
-      setError(error);
       console.log(error);
     }
     // } else {
@@ -62,7 +92,7 @@ function Login() {
     e.preventDefault();
 
     if (password !== cnfmPassword) {
-      setError("Password don't match!");
+      handleNotification("Password don't match!", "error");
       return;
     }
 
@@ -85,24 +115,30 @@ function Login() {
         throw new Error(json.message || "Something went wrong");
       }
 
+      // handleModeChange("signin");
+      setStatesToDefault();
+      setMode("signin");
       console.log(json.message);
-
-      handleModeChange("signin");
+      handleNotification(json.message, "success");
       // router.replace("/auth");
     } catch (error) {
-      setError(error.message);
+      handleNotification(error.message, "error");
       console.log(error);
     }
   };
 
-  const handleModeChange = (desiredMode) => (e) => {
-    console.log(desiredMode);
-    setMode(desiredMode);
+  const setStatesToDefault = () => {
     setUsername("");
     setPassword("");
     setCnfmPassword("");
     setEmail("");
-    setError("");
+    setMsg("");
+  };
+
+  const handleModeChange = (desiredMode) => (e) => {
+    // console.log(desiredMode);
+    setMode(desiredMode);
+    setStatesToDefault();
   };
 
   return (
@@ -111,6 +147,15 @@ function Login() {
         mode === "signup" && styles.sign_up_mode
       }`}
     >
+      <Snackbar open={openNotif} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          sx={{ width: "100%", fontSize: "16px" }}
+        >
+          {msg}
+        </Alert>
+      </Snackbar>
       <div className={styles.forms_container}>
         <div className={styles.signin_signup}>
           <form
@@ -141,7 +186,7 @@ function Login() {
             <div className={styles.forgotPwd}>
               <Link href="#">Forgot your Password?</Link>
             </div>
-            <span className={styles.error}>{error}</span>
+            {/* <span className={styles.error}>{error}</span> */}
             <button
               type="submit"
               className={styles.btn}
@@ -220,7 +265,7 @@ function Login() {
                 onChange={(e) => setCnfmPassword(e.target.value)}
               />
             </div>
-            <span className={styles.error}>{error}</span>
+            {/* <span className={styles.error}>{error}</span> */}
             <button type="submit" className={styles.btn}>
               Sign Up
             </button>
