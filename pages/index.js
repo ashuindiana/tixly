@@ -2,8 +2,8 @@ import Carousel from "../components/Carousel/Carousel";
 import ContentCards from "../components/ContentCards/ContentCards";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { dbConnect } from "../utils/dbConnect";
 import Header from "../components/Header/Header";
+import { dbConnect } from "../utils/dbConnect";
 
 function Home({ eventCategoryData }) {
   const [selectedEvent, setSelectedEvent] = useState(0);
