@@ -54,6 +54,12 @@
 }
 .user_icon {
   display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  height: 100%;
+  text-align: center;
 }
 
 .toggle_link {
@@ -67,6 +73,40 @@
 
 .profile_wrapper {
   display: none;
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown_menu {
+  font-size: 2rem;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 150px;
+  position: absolute;
+  right: 0;
+  top: 5rem;
+  background-color: #fff;
+  padding: 0.75rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.dropdown_menu.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 @media screen and (max-width: 950px) {

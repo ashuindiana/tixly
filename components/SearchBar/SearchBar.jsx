@@ -67,7 +67,7 @@ export default function SearchBar({ data, placeholder, noSearch }) {
       )}
       getOptionLabel={(option) => (option.title ? option.title : "")}
       renderOption={(props, option, { selected }) => (
-        <SearchOptions option={option} />
+        <SearchOptions option={option} key={option.id} />
       )}
       PopperComponent={CustomPopper}
     />

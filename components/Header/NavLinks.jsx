@@ -1,31 +1,17 @@
-import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import Link from "next/link";
-import { useState } from "react";
-import headerStyles from "./Header.module.css";
+
 import { useRouter } from "next/router";
+import ProfileLink from "./ProfileLink";
 
 function NavLinks() {
-  const [curPath, setCurPath] = useState("");
-  let { asPath } = useRouter();
-  asPath = asPath.slice(1);
+  const router = useRouter();
+  const asPath = router.asPath.slice(1);
 
-  // if (asPath.includes("positions")) {
-  //   setCurPath("positions");
-  // } else if (asPath.includes("funds")) {
-  //   setCurPath("funds");
-  // } else if (asPath.includes("referrals")) {
-  //   setCurPath("referrals");
-  // } else {
-  //   setCurPath("");
-  // }
-  const handlePath = () => {
-    console.log(curPath, asPath);
-  };
+  // console.log(session);
   return (
     <ul>
       <li>
         <div
-          onClick={handlePath}
           style={{
             color: `${asPath.includes("positions") && "#3E32CD"}`,
             fontWeight: `${asPath.includes("positions") && "700"}`,
@@ -37,7 +23,6 @@ function NavLinks() {
       </li>
       <li>
         <div
-          onClick={handlePath}
           style={{
             color: `${asPath.includes("funds") && "#3E32CD"}`,
             fontWeight: `${asPath.includes("funds") && "700"}`,
@@ -49,7 +34,6 @@ function NavLinks() {
       </li>
       <li>
         <div
-          onClick={handlePath}
           style={{
             color: `${asPath.includes("referrals") && "#3E32CD"}`,
             fontWeight: `${asPath.includes("referrals") && "700"}`,
@@ -60,9 +44,7 @@ function NavLinks() {
         </div>
       </li>
       <li>
-        <div className={headerStyles.user_icon}>
-          <AccountCircleSharpIcon id={headerStyles.user_avatar} />
-        </div>
+        <ProfileLink />
       </li>
     </ul>
   );
