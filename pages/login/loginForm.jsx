@@ -27,7 +27,7 @@ export function LoginForm(props) {
       <span style={{ display: "flex", marginTop: "1em" }}></span>
       <div className={styles.Link}>
         <>
-          Don't have an account?{" "}
+          Don't have an account?
           <div className={styles.BoldLink} onClick={switchToSignup}>
             <Link href="#">Signup</Link>
           </div>
