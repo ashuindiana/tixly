@@ -147,7 +147,12 @@ function Login() {
         mode === "signup" && styles.sign_up_mode
       }`}
     >
-      <Snackbar open={openNotif} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar
+        open={openNotif}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
         <Alert
           onClose={handleClose}
           severity={severity}
