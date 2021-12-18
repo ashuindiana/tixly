@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import Preloader from "../../components/PreLoader";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={16} ref={ref} variant="filled" {...props} />;
@@ -28,10 +27,6 @@ function Login() {
   const [severity, setSeverity] = useState("");
 
   const [openNotif, setOpenNotif] = useState(false);
-
-  // const handleNotifOpen = () => {
-  //   setOpenNotif(true);
-  // };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -141,12 +136,6 @@ function Login() {
     setMode(desiredMode);
     setStatesToDefault();
   };
-
-  const { status } = useSession();
-
-  if (status === "loading") {
-    return <Preloader />;
-  }
 
   return (
     <div
