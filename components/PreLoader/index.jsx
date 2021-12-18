@@ -12,8 +12,8 @@ function Preloader() {
             cy="50"
             r="20"
             fill="none"
-            stroke-width="2"
-            stroke-miterLimit="10"
+            strokeWidth="2"
+            strokeMiterLimit="10"
           />
         </svg>
       </div>
