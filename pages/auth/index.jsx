@@ -7,11 +7,12 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import Preloader from "../../components/PreLoader";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={16} ref={ref} variant="filled" {...props} />;
@@ -140,6 +141,12 @@ function Login() {
     setMode(desiredMode);
     setStatesToDefault();
   };
+
+  const { status } = useSession();
+
+  if (status === "loading") {
+    return <Preloader />;
+  }
 
   return (
     <div
