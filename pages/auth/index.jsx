@@ -20,7 +20,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function Auth({ providers, csrfToken }) {
-  // console.log(csrfToken, "csrfToken");
+  console.log(providers, "providers");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
