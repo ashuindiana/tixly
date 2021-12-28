@@ -2,8 +2,18 @@ import { motion } from "framer-motion";
 import Switcher from "../../components/EventComponentSwitcher/Switcher";
 import Header from "../../components/Header/Header";
 import { dbConnect } from "../../utils/dbConnect";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-function positions({ live_data, past_data }) {
+function Positions({ live_data, past_data }) {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (!session) {
+      return router.push("/auth");
+    }
+  }, []);
   return (
     <motion.div
       initial={{
@@ -33,13 +43,27 @@ function positions({ live_data, past_data }) {
       <div
         style={{ padding: "0 5%", display: "flex", flexDirection: "column" }}
       >
-        <Switcher live_data={live_data} past_data={past_data} />
+        {status === "authenticated" ? (
+          <Switcher live_data={live_data} past_data={past_data} />
+        ) : (
+          <h2
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              marginTop: "12rem",
+            }}
+          >
+            Not Authenticated..
+          </h2>
+        )}
       </div>
     </motion.div>
   );
 }
 
-export default positions;
+export default Positions;
 
 export async function getStaticProps(context) {
   try {

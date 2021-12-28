@@ -9,6 +9,9 @@ import Community from "../../components/SingleEvent/Community";
 import Outcome from "../../components/SingleEvent/Outcome";
 import { dbConnect } from "../../utils/dbConnect";
 import Header from "../../components/Header/Header";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const recentData = [
   {
@@ -73,6 +76,13 @@ const communityData = [
 ];
 
 function Event({ data }) {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (!session) {
+      return router.push("/auth");
+    }
+  }, []);
   const [curEvent, setCurEvent] = useState("about");
   const [outcome, setOutcome] = useState("yes");
   return (
@@ -104,193 +114,203 @@ function Event({ data }) {
       <div
         style={{ padding: "0 5%", display: "flex", flexDirection: "column" }}
       >
-        <div className={styles.container}>
-          <div className={styles.upper}>
-            <div className={styles.card}>
-              <div className={styles.header}>
-                <div className={styles.image}>
-                  <Image
-                    src={data.events.imgSrc}
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
+        {status === "authenticated" ? (
+          <div className={styles.container}>
+            <div className={styles.upper}>
+              <div className={styles.card}>
+                <div className={styles.header}>
+                  <div className={styles.image}>
+                    <Image
+                      src={data.events.imgSrc}
+                      alt=""
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                  <div className={styles.titleAndHash}>
+                    <span className={styles.hashTag}>#{data.title}</span>
+                    <div className={styles.title}>{data.events.title}</div>
+                  </div>
+                </div>
+                <div className={styles.details}>
+                  <div className={styles.detail_item}>
+                    <div className={styles.upperRow}>Market Ends On</div>
+                    <div className={styles.lowerRow}>
+                      {data.events.marketEnd}
+                    </div>
+                  </div>
+                  <div className={styles.detail_item}>
+                    <div className={styles.upperRow}>Total Volume</div>
+                    <div className={styles.lowerRow}>
+                      ₹ {data.events.volume}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.lower}>
+              <div className={styles.left}>
+                <div className={styles.chart}>
+                  <Line
+                    data={{
+                      labels: ["1", "2", "3", "4", "5", "6"],
+                      datasets: [
+                        {
+                          label: "YES",
+                          data: [12, 19, 3, 5, 2, 3],
+                          fill: false,
+                          borderColor: "#81D373",
+                          tension: 0.1,
+                        },
+                        {
+                          label: "NO",
+                          data: [10, 9, 7, 2, 10, 11],
+                          fill: false,
+                          borderColor: "#F65179",
+                          tension: 0.1,
+                        },
+                      ],
+                    }}
+                    options={{
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          grid: {
+                            display: false,
+                          },
+                        },
+                        x: {
+                          grid: {
+                            display: false,
+                          },
+                        },
+                      },
+                    }}
                   />
                 </div>
-                <div className={styles.titleAndHash}>
-                  <span className={styles.hashTag}>#{data.title}</span>
-                  <div className={styles.title}>{data.events.title}</div>
-                </div>
-              </div>
-              <div className={styles.details}>
-                <div className={styles.detail_item}>
-                  <div className={styles.upperRow}>Market Ends On</div>
-                  <div className={styles.lowerRow}>{data.events.marketEnd}</div>
-                </div>
-                <div className={styles.detail_item}>
-                  <div className={styles.upperRow}>Total Volume</div>
-                  <div className={styles.lowerRow}>₹ {data.events.volume}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.lower}>
-            <div className={styles.left}>
-              <div className={styles.chart}>
-                <Line
-                  data={{
-                    labels: ["1", "2", "3", "4", "5", "6"],
-                    datasets: [
-                      {
-                        label: "YES",
-                        data: [12, 19, 3, 5, 2, 3],
-                        fill: false,
-                        borderColor: "#81D373",
-                        tension: 0.1,
-                      },
-                      {
-                        label: "NO",
-                        data: [10, 9, 7, 2, 10, 11],
-                        fill: false,
-                        borderColor: "#F65179",
-                        tension: 0.1,
-                      },
-                    ],
-                  }}
-                  options={{
-                    scales: {
-                      y: {
-                        beginAtZero: true,
-                        grid: {
-                          display: false,
-                        },
-                      },
-                      x: {
-                        grid: {
-                          display: false,
-                        },
-                      },
-                    },
-                  }}
-                />
-              </div>
-              <div className={styles.switcherWrapper}>
-                <div className={styles.eventWrapper}>
-                  <div
-                    onClick={() => setCurEvent("about")}
-                    className={`${styles.event} ${
-                      curEvent === "about" && styles.event_active
-                    }`}
-                  >
-                    <h2>About this Event</h2>
-                  </div>
-                  <div
-                    onClick={() => setCurEvent("recent")}
-                    className={`${styles.event} ${
-                      curEvent === "recent" && styles.event_active
-                    }`}
-                  >
-                    <h2>Recent Trades</h2>
-                  </div>
-                  <div
-                    onClick={() => setCurEvent("community")}
-                    className={`${styles.event} ${
-                      curEvent === "community" && styles.event_active
-                    }`}
-                  >
-                    <h2>Community</h2>
-                  </div>
-                </div>
-                <AnimatePresence exitBeforeEnter>
-                  {curEvent === "about" ? (
-                    <motion.div
-                      key={0}
-                      initial={{ y: 20 }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      exit={{ y: 20 }}
-                      style={{ width: "100%" }}
-                    >
-                      <About />
-                    </motion.div>
-                  ) : curEvent === "recent" ? (
-                    <motion.div
-                      key={1}
-                      initial={{ y: 20 }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      exit={{ y: 20 }}
-                      style={{ width: "100%" }}
-                    >
-                      <Recent recentData={recentData} />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key={2}
-                      initial={{ y: 20 }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      exit={{ y: 20 }}
-                    >
-                      <Community communityData={communityData} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-            <div className={styles.right}>
-              <h2>Pick Outcome</h2>
-              <div className={styles.switcherWrapper}>
-                <div className={styles.rightEventWrapper}>
-                  <div
-                    className={styles.rightEvent}
-                    style={{ textAlign: "end" }}
-                  >
-                    <button
-                      onClick={() => setOutcome("yes")}
-                      className={`${
-                        outcome === "yes" && styles.yesEvent_active
+                <div className={styles.switcherWrapper}>
+                  <div className={styles.eventWrapper}>
+                    <div
+                      onClick={() => setCurEvent("about")}
+                      className={`${styles.event} ${
+                        curEvent === "about" && styles.event_active
                       }`}
                     >
-                      Yes
-                    </button>
-                  </div>
-                  <div className={styles.rightEvent}>
-                    <button
-                      onClick={() => setOutcome("no")}
-                      className={`${outcome === "no" && styles.noEvent_active}`}
+                      <h2>About this Event</h2>
+                    </div>
+                    <div
+                      onClick={() => setCurEvent("recent")}
+                      className={`${styles.event} ${
+                        curEvent === "recent" && styles.event_active
+                      }`}
                     >
-                      No
-                    </button>
+                      <h2>Recent Trades</h2>
+                    </div>
+                    <div
+                      onClick={() => setCurEvent("community")}
+                      className={`${styles.event} ${
+                        curEvent === "community" && styles.event_active
+                      }`}
+                    >
+                      <h2>Community</h2>
+                    </div>
                   </div>
+                  <AnimatePresence exitBeforeEnter>
+                    {curEvent === "about" ? (
+                      <motion.div
+                        key={0}
+                        initial={{ y: 20 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        exit={{ y: 20 }}
+                        style={{ width: "100%" }}
+                      >
+                        <About />
+                      </motion.div>
+                    ) : curEvent === "recent" ? (
+                      <motion.div
+                        key={1}
+                        initial={{ y: 20 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        exit={{ y: 20 }}
+                        style={{ width: "100%" }}
+                      >
+                        <Recent recentData={recentData} />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key={2}
+                        initial={{ y: 20 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        exit={{ y: 20 }}
+                      >
+                        <Community communityData={communityData} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-                <AnimatePresence exitBeforeEnter>
-                  {outcome === "yes" ? (
-                    <motion.div
-                      key={0}
-                      initial={{ y: 20 }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      exit={{ y: 20 }}
+              </div>
+              <div className={styles.right}>
+                <h2>Pick Outcome</h2>
+                <div className={styles.switcherWrapper}>
+                  <div className={styles.rightEventWrapper}>
+                    <div
+                      className={styles.rightEvent}
+                      style={{ textAlign: "end" }}
                     >
-                      <Outcome type="yes" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key={1}
-                      initial={{ y: 20 }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      exit={{ y: 20 }}
-                    >
-                      <Outcome type="no" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      <button
+                        onClick={() => setOutcome("yes")}
+                        className={`${
+                          outcome === "yes" && styles.yesEvent_active
+                        }`}
+                      >
+                        Yes
+                      </button>
+                    </div>
+                    <div className={styles.rightEvent}>
+                      <button
+                        onClick={() => setOutcome("no")}
+                        className={`${
+                          outcome === "no" && styles.noEvent_active
+                        }`}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                  <AnimatePresence exitBeforeEnter>
+                    {outcome === "yes" ? (
+                      <motion.div
+                        key={0}
+                        initial={{ y: 20 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        exit={{ y: 20 }}
+                      >
+                        <Outcome type="yes" />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key={1}
+                        initial={{ y: 20 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        exit={{ y: 20 }}
+                      >
+                        <Outcome type="no" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <h2 className={styles.container}>Not Authenticated..</h2>
+        )}
       </div>
     </motion.div>
   );

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { server } from "../../../config";
+import Image from "next/image";
 import headerStyles from "../Header.module.css";
+import styles from "./profile.module.css";
 import { useSession, signOut, signIn } from "next-auth/react";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 
@@ -30,7 +32,18 @@ function ProfileLink() {
           className={headerStyles.dropdown}
           onClick={() => setActive(!active)}
         >
-          <AccountCircleSharpIcon id={headerStyles.user_avatar} />
+          {!session.user.image ? (
+            <AccountCircleSharpIcon id={headerStyles.user_avatar} />
+          ) : (
+            <div className={styles.image}>
+              <Image
+                src={session.user.image}
+                alt=""
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+          )}
           <div
             className={`${headerStyles.dropdown_menu} ${
               active && headerStyles.active

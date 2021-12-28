@@ -1,15 +1,48 @@
 import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import EmailProvider from "next-auth/providers/email";
+import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { verifyPassword } from "../../../utils/auth";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "../../../utils/mongodb";
+import { html, text } from "../../../components/HtmlEmail";
+import nodemailer from "nodemailer";
+import { verifyPassword, hashPassword } from "../../../utils/auth";
 import { dbConnect } from "../../../utils/dbConnect";
 
-const options = {
+export default NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     jwt: true,
   },
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    }),
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+      async sendVerificationRequest({
+        identifier: email,
+        url,
+        provider: { server, from },
+      }) {
+        const { host } = new URL(url);
+        const transport = nodemailer.createTransport(server);
+        await transport.sendMail({
+          to: email,
+          from,
+          subject: `Sign in to ${host}`,
+          text: text({ url, host }),
+          html: html({ url, host, email }),
+        });
+      },
+    }),
     CredentialsProvider({
       name: "credentials",
       async authorize(credentials) {
@@ -19,7 +52,18 @@ const options = {
             email: credentials.email,
           });
 
-          if (!user) throw new Error("Bad Credentials");
+          if (!user) {
+            const hashedPassword = await hashPassword(credentials.password);
+
+            const result = await db.collection("users").insertOne({
+              email: credentials.email,
+              password: hashedPassword,
+              name: "Guest",
+              emailVerified: null,
+            });
+
+            throw new Error("Success! Check your email.");
+          }
 
           const isPasswordValid = await verifyPassword(
             credentials.password,
@@ -28,6 +72,10 @@ const options = {
 
           if (!isPasswordValid) throw new Error("Bad Credentials");
 
+          if (!user.emailVerified) {
+            throw new Error("Success! Check your email.");
+          }
+          // console.log("Verified", user);
           return {
             _id: user._id,
             email: user.email,
@@ -40,8 +88,11 @@ const options = {
   ],
   pages: {
     signIn: "/auth",
+    error: "/auth",
+    // newUser: "/funds",
   },
-  debug: true,
-};
-
-export default (req, res) => NextAuth(req, res, options);
+  adapter: MongoDBAdapter(clientPromise),
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+  },
+});

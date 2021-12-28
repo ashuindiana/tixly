@@ -1,12 +1,22 @@
 import React from "react";
 import styles from "../positionEvent.module.css";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { dbConnect } from "../../../utils/dbConnect";
 import Card from "../../../components/ContentCards/Card";
 import Header from "../../../components/Header/Header";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 const ObjectId = require("mongodb").ObjectId;
 
 function PositionEvent({ data }) {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (!session) {
+      return router.push("/auth");
+    }
+  }, []);
   const card_details = ["trades", "investment"];
   return (
     <motion.div
@@ -37,25 +47,31 @@ function PositionEvent({ data }) {
       <div
         style={{ padding: "0 5%", display: "flex", flexDirection: "column" }}
       >
-        <div className={styles.container}>
-          <div className={styles.cardContainer}>
-            <Card data={data} card_details={card_details} noLink={true} />
-          </div>
-          <div className={styles.lower}>
-            <h3>Trades</h3>
-            <div className={styles.card}>
-              <div className={styles.card_header}>
-                <div className={styles.card_title}>No</div>
+        {status === "authenticated" ? (
+          <div className={styles.container}>
+            <div className={styles.cardContainer}>
+              <Card data={data} card_details={card_details} noLink={true} />
+            </div>
+            <div className={styles.lower}>
+              <h3>Trades</h3>
+              <div className={styles.card}>
+                <div className={styles.card_header}>
+                  <div className={styles.card_title}>No</div>
 
-                <div className={styles.card_status}>SETTLED</div>
-              </div>
-              <div className={styles.details}>
-                <div className={styles.detail_item}>1 x ₹ 2</div>
-                <div className={styles.detail_item}>Aug, 03, 2021, 4:30pm</div>
+                  <div className={styles.card_status}>SETTLED</div>
+                </div>
+                <div className={styles.details}>
+                  <div className={styles.detail_item}>1 x ₹ 2</div>
+                  <div className={styles.detail_item}>
+                    Aug, 03, 2021, 4:30pm
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <h2 className={styles.container}>Not Authenticated..</h2>
+        )}
       </div>
     </motion.div>
   );
