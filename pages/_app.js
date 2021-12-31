@@ -8,7 +8,7 @@ import "../styles/nprogress.css";
 
 // import { useRouter } from "next/router";
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps: { session, ...pageProps }, router }) {
   // const router = useRouter();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps, router }) {
   }, [router]);
 
   return (
-    <SessionProvider>
+    <SessionProvider session={session}>
       <Layout>
         <AnimatePresence exitBeforeEnter>
           <Component {...pageProps} key={router.route} />

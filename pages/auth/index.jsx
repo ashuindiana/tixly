@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./auth.module.css";
 import PersonIcon from "@mui/icons-material/Person";
-import LockIcon from "@mui/icons-material/Lock";
-import FacebookIcon from "@mui/icons-material/Facebook";
+// import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import {
   getSession,
@@ -11,7 +10,6 @@ import {
   getCsrfToken,
 } from "next-auth/react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -20,9 +18,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function Auth({ providers, csrfToken }) {
-  console.log(providers, "providers");
+  // console.log(providers, "providers");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [severity, setSeverity] = useState("");
   const [openNotif, setOpenNotif] = useState(false);
@@ -59,20 +56,12 @@ function Auth({ providers, csrfToken }) {
 
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
-    if (password.trim().length < 7) {
-      handleNotification(
-        "Invalid Email Format or Password less than 7 characters",
-        "error"
-      );
-      return;
-    }
 
-    // if (!session) {
     try {
-      const result = await signIn("credentials", {
-        redirect: false,
+      const result = await signIn("email", {
+        // redirect: false,
         email: email,
-        password: password,
+        // password: password,
       });
 
       console.log(result);
@@ -91,9 +80,6 @@ function Auth({ providers, csrfToken }) {
     } catch (error) {
       console.log(error);
     }
-    // } else {
-    //   router.replace("/");
-    // }
   };
 
   // const handleSignUpSubmit = async (e) => {
@@ -136,9 +122,6 @@ function Auth({ providers, csrfToken }) {
   // };
 
   const setStatesToDefault = () => {
-    // setUsername("");
-    setPassword("");
-    // setCnfmPassword("");
     setEmail("");
     setMsg("");
   };
@@ -184,20 +167,6 @@ function Auth({ providers, csrfToken }) {
                 required
               />
             </div>
-            <div className={styles.input_field}>
-              <LockIcon className={styles.icon} />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className={styles.forgotPwd}>
-              <Link href="#">Forgot your Password?</Link>
-            </div>
 
             <button
               type="submit"
@@ -214,15 +183,21 @@ function Auth({ providers, csrfToken }) {
               key={providers.name}
               onClick={() => signIn(providers.google.id)}
             >
-              <GoogleIcon className={styles.social_svg} />
+              <GoogleIcon
+                sx={{ color: "#333", fontSize: "2.5rem" }}
+                className={styles.social_svg}
+              />
             </div>
-            <div
+            {/* <div
               className={styles.social_icon}
               key={providers.name}
               onClick={() => signIn(providers.facebook.id)}
             >
-              <FacebookIcon className={styles.social_svg} />
-            </div>
+              <FacebookIcon
+                sx={{ color: "#333", fontSize: "2.5rem" }}
+                className={styles.social_svg}
+              />
+            </div> */}
           </div>
         </div>
       </div>
@@ -234,7 +209,6 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
   const providers = await getProviders();
   const csrfToken = await getCsrfToken(context);
-  console.log("/auth", session);
   if (session) {
     return {
       redirect: {

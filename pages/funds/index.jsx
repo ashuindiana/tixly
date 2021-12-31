@@ -161,7 +161,9 @@ function Funds() {
             </div>
           </div>
         ) : (
-          <h2 className={styles.container}>Not Authenticated..</h2>
+          <h2 className={styles.container}>
+            Not Authenticated, Redirecting to Login Page
+          </h2>
         )}
       </div>
     </motion.div>

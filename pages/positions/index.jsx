@@ -55,7 +55,7 @@ function Positions({ live_data, past_data }) {
               marginTop: "12rem",
             }}
           >
-            Not Authenticated..
+            Not Authenticated, Redirecting to Login Page
           </h2>
         )}
       </div>

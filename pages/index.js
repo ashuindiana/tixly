@@ -1,10 +1,9 @@
 import Carousel from "../components/Carousel/Carousel";
 import ContentCards from "../components/ContentCards/ContentCards";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "../components/Header/Header";
 import { dbConnect } from "../utils/dbConnect";
-import { useSession } from "next-auth/react";
 
 function Home({ eventCategoryData }) {
   const [selectedEvent, setSelectedEvent] = useState(0);
@@ -13,11 +12,6 @@ function Home({ eventCategoryData }) {
     const [_, category_id] = _id.split("_");
     setSelectedEvent(Number(category_id));
   };
-
-  const { data: session } = useSession();
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   return (
     <motion.div
