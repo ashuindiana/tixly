@@ -12,11 +12,19 @@ function MyApp({ Component, pageProps, router }) {
   // const router = useRouter();
 
   useEffect(() => {
+    const tempFix = () => {
+      const allStyleElems = document.querySelectorAll('style[media="x"]');
+      allStyleElems.forEach((elem) => {
+        elem.removeAttribute("media");
+      });
+    };
     const handleStart = (url) => {
-      console.log(`Loading: ${url}`);
+      // console.log(`Loading: ${url}`);
+      tempFix();
       NProgress.start();
     };
     const handleStop = () => {
+      tempFix();
       NProgress.done();
     };
 
